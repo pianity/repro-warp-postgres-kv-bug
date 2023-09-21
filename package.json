@@ -1,0 +1,21 @@
+{
+    "name": "web3-workshop2",
+    "module": "index.ts",
+    "type": "module",
+    "scripts": {
+        "start": "tsx src/index.ts"
+    },
+    "devDependencies": {
+        "bun-types": "latest",
+        "tsx": "^3.12.10"
+    },
+    "peerDependencies": {
+        "typescript": "^5.0.0"
+    },
+    "dependencies": {
+        "arweave": "^1.14.4",
+        "prettier": "^3.0.3",
+        "warp-contracts": "1.4.18",
+        "warp-contracts-plugin-deploy": "1.0.9"
+    }
+}
