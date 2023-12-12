@@ -2,20 +2,21 @@
     "name": "web3-workshop2",
     "module": "index.ts",
     "type": "module",
+    "license": "MIT",
     "scripts": {
         "start": "tsx src/index.ts"
     },
-    "devDependencies": {
-        "bun-types": "latest",
-        "tsx": "^3.12.10"
-    },
-    "peerDependencies": {
-        "typescript": "^5.0.0"
-    },
     "dependencies": {
+        "tsx": "4.6.2",
+        "arbundles": "^0.10.0",
+        "arlocal": "1.1.62",
         "arweave": "^1.14.4",
         "prettier": "^3.0.3",
-        "warp-contracts": "1.4.18",
-        "warp-contracts-plugin-deploy": "1.0.9"
+        "typescript": "^5.0.0",
+        "warp-arbundles": "^1.0.4",
+        "warp-contracts": "1.4.26",
+        "warp-contracts-plugin-deploy": "1.0.12",
+        "warp-contracts-plugin-signature": "^1.0.17",
+        "warp-contracts-postgres": "^1.1.0"
     }
 }
