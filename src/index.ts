@@ -1,37 +1,7 @@
-import { readFileSync } from "node:fs";
-
 import ArLocal from "arlocal";
 import { SmartWeaveGlobal, LoggerFactory, WarpFactory, Transaction } from "warp-contracts";
 import { DeployPlugin, ArweaveSigner } from "warp-contracts-plugin-deploy";
 import { PgSortKeyCache, PgSortKeyCacheOptions } from "warp-contracts-postgres";
-// import { ArweaveSigner } from "warp-arbundles";
-
-// const ArLocal = (ArLocalBuggy as any).default as ArLocalBuggy;
-
-// export default class ArweaveSigner implements Signer {
-//     readonly signatureType: number = 1;
-//     readonly ownerLength: number = SIG_CONFIG[1].pubLength;
-//     readonly signatureLength: number = SIG_CONFIG[1].sigLength;
-//     protected jwk: JWKInterface;
-//     public pk: string;
-//
-//     constructor(jwk: JWKInterface) {
-//         this.pk = jwk.n;
-//         this.jwk = jwk;
-//     }
-//
-//     get publicKey(): Buffer {
-//         return base64url.toBuffer(this.pk);
-//     }
-//
-//     sign(message: Uint8Array): Uint8Array {
-//         return getCryptoDriver().sign(this.jwk, message) as any;
-//     }
-//
-//     static async verify(pk: string, message: Uint8Array, signature: Uint8Array): Promise<boolean> {
-//         return await getCryptoDriver().verify(pk, message, signature);
-//     }
-// }
 
 LoggerFactory.INST.logLevel("error");
 
@@ -57,9 +27,6 @@ const erc20Contract = (() => {
 
         if (input.function === "balanceOf") {
             const target = input.target ?? caller;
-
-            // console.log(`[debug] ${target}: ${await SmartWeave.kv.get(target)}`);
-
             const balance = ((await SmartWeave.kv.get(target)) as number) ?? 0;
 
             return { result: [target, balance] };
@@ -73,7 +40,6 @@ const erc20Contract = (() => {
             }
             const newOwnerBalance = ownerBalance - input.quantity;
             if (newOwnerBalance === 0) {
-                console.log(`[debug] deleting ${owner}`);
                 await SmartWeave.kv.del(owner);
             } else {
                 await SmartWeave.kv.put(owner, newOwnerBalance);
@@ -82,9 +48,6 @@ const erc20Contract = (() => {
             const newTargetBalance =
                 (((await SmartWeave.kv.get(input.target)) as number) ?? 0) + input.quantity;
             await SmartWeave.kv.put(input.target, newTargetBalance);
-
-            console.log("OWNER", owner);
-            console.log("NEW BALANCE", await SmartWeave.kv.get(input.target));
 
             return { state };
         }
@@ -132,34 +95,19 @@ const testContract = (() => {
         maxEntriesPerKey: 10000,
     });
 
-    // const warp = WarpFactory.forTestnet({ inMemory: true, dbLocation: "./cache/warp" }).use(
-    //     new DeployPlugin(),
-    // );
-    // // .useKVStorageFactory((contractTxId) => new PgSortKeyCache(cacheOpts(contractTxId)));
-
-    const arlocal = new (ArLocal as any).default(1987, false) as ArLocal;
-    await arlocal.start();
-    const warp = WarpFactory.forLocal(1987, undefined, {
-        inMemory: true,
-        dbLocation: "/dev/null",
-    }).use(new DeployPlugin());
-    // .useKVStorageFactory((contractTxId) => new PgSortKeyCache(cacheOpts(contractTxId)));
+    const warp = WarpFactory.forTestnet({ inMemory: true, dbLocation: "./cache/warp" })
+        .use(new DeployPlugin())
+        .useKVStorageFactory((contractTxId) => new PgSortKeyCache(cacheOpts(contractTxId)));
 
     const { arweave } = warp;
 
     const wallet1 = await arweave.wallets.generate();
     const wallet1Addr = await arweave.wallets.jwkToAddress(wallet1);
-    await warp.testing.addFunds(wallet1);
+    const wallet1Signer = new ArweaveSigner(wallet1);
 
-    const signer = new ArweaveSigner(wallet1);
-
-    // const erc20InitState: Erc20State = {
-    //     balances: { [walletArbankAddr]: 1_000_000 },
-    // };
     const erc20TxId = (
         await warp.deploy({
-            wallet: wallet1,
-            // wallet: signer,
+            wallet: wallet1Signer,
             initState: JSON.stringify({}),
             src: erc20Contract,
             evaluationManifest: {
@@ -177,8 +125,7 @@ const testContract = (() => {
 
     const testTxId = (
         await warp.deploy({
-            wallet: wallet1,
-            // wallet: signer,
+            wallet: wallet1Signer,
             initState: JSON.stringify({}),
             src: testContract,
             evaluationManifest: {
@@ -200,11 +147,11 @@ const testContract = (() => {
             .result,
     );
 
-    console.log("funding");
+    console.log("=== funding ===");
 
     await erc20.writeInteraction({ function: "fundMe" } satisfies Erc20Action, { strict: true });
 
-    console.log("transfer to bob");
+    console.log("=== transfering to bob ===");
 
     await test.writeInteraction({
         function: "transfer",
@@ -219,7 +166,7 @@ const testContract = (() => {
             .result,
     );
 
-    console.log("transfer from bob");
+    console.log("=== transfering from bob ===");
 
     await test.writeInteraction({
         function: "transfer",
@@ -228,16 +175,11 @@ const testContract = (() => {
         quantity: 100,
     } satisfies Erc20Action);
 
-    console.log("reading result");
-
-    // await erc20.readState();
-    // await test.readState();
+    console.log("=== reading result ===");
 
     console.log((await erc20.viewState({ function: "balanceOf" } satisfies Erc20Action)).result);
     console.log(
         (await erc20.viewState({ function: "balanceOf", target: "bob" } satisfies Erc20Action))
             .result,
     );
-
-    await arlocal.stop();
 })();
