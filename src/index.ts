@@ -7,7 +7,6 @@ LoggerFactory.INST.logLevel("error");
 
 let SmartWeave: SmartWeaveGlobal;
 
-type Erc20State = {};
 type Erc20Action =
     | { function: "fundMe" }
     | { function: "transfer"; from?: string; target: string; quantity: number }
@@ -15,9 +14,9 @@ type Erc20Action =
 
 const erc20Contract = (() => {
     async function handle(
-        state: Erc20State,
+        state: unknown,
         { input, caller }: { input: Erc20Action; caller: string },
-    ): Promise<{ state: Erc20State } | { result: unknown }> {
+    ): Promise<{ state: unknown } | { result: unknown }> {
         if (input.function === "fundMe") {
             const newBalance = (((await SmartWeave.kv.get(caller)) as number) ?? 0) + 1_000_000;
             await SmartWeave.kv.put(caller, newBalance);
@@ -57,14 +56,13 @@ const erc20Contract = (() => {
     return handle.toString();
 })();
 
-type TestState = {};
-type TestAction = { function: "transfer"; erc20: string; target: string; quantity: number };
+type ProxyAction = { function: "transfer"; erc20: string; target: string; quantity: number };
 
-const testContract = (() => {
+const proxyContract = (() => {
     async function handle(
-        state: TestState,
-        action: { input: TestAction; caller: string },
-    ): Promise<{ state: TestState } | { result: unknown }> {
+        state: unknown,
+        action: { input: ProxyAction; caller: string },
+    ): Promise<{ state: unknown } | { result: unknown }> {
         if (action.input.function === "transfer") {
             const transferInput: Erc20Action = {
                 function: "transfer",
@@ -119,15 +117,15 @@ const testContract = (() => {
         })
     ).contractTxId;
     const erc20 = warp
-        .contract<Erc20State>(erc20TxId)
+        .contract(erc20TxId)
         .setEvaluationOptions({ internalWrites: true, useKVStorage: true })
         .connect(wallet1);
 
-    const testTxId = (
+    const proxyTxId = (
         await warp.deploy({
             wallet: wallet1Signer,
             initState: JSON.stringify({}),
-            src: testContract,
+            src: proxyContract,
             evaluationManifest: {
                 evaluationOptions: {
                     useKVStorage: true,
@@ -136,8 +134,8 @@ const testContract = (() => {
             },
         })
     ).contractTxId;
-    const test = warp
-        .contract(testTxId)
+    const proxy = warp
+        .contract(proxyTxId)
         .setEvaluationOptions({ internalWrites: true, useKVStorage: true })
         .connect(wallet1);
 
@@ -153,12 +151,12 @@ const testContract = (() => {
 
     console.log("=== transfering to bob ===");
 
-    await test.writeInteraction({
+    await proxy.writeInteraction({
         function: "transfer",
         target: "bob",
         quantity: 100,
         erc20: erc20TxId,
-    } satisfies TestAction);
+    } satisfies ProxyAction);
 
     console.log((await erc20.viewState({ function: "balanceOf" } satisfies Erc20Action)).result);
     console.log(
@@ -168,7 +166,7 @@ const testContract = (() => {
 
     console.log("=== transfering from bob ===");
 
-    await test.writeInteraction({
+    await proxy.writeInteraction({
         function: "transfer",
         from: "bob",
         target: wallet1Addr,
