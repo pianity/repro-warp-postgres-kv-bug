@@ -1247,30 +1247,6 @@ arbundles@^0.6.19:
     secp256k1 "^4.0.2"
     tmp-promise "^3.0.2"
 
-arbundles@^0.9.8:
-  version "0.9.11"
-  resolved "https://registry.yarnpkg.com/arbundles/-/arbundles-0.9.11.tgz#4dbccecc20876b38f01ba4b80abe8ee761c3e1e9"
-  integrity sha512-y42MaiPWzW7MVHd+b/xWvv2Uj0nthAk3SIxRO5r5uw7427KRNYjld293sNyhzK52CHkdaiQIPDdfinmjrxNRYQ==
-  dependencies:
-    "@ethersproject/bytes" "^5.7.0"
-    "@ethersproject/hash" "^5.7.0"
-    "@ethersproject/providers" "^5.7.2"
-    "@ethersproject/signing-key" "^5.7.0"
-    "@ethersproject/transactions" "^5.7.0"
-    "@ethersproject/wallet" "^5.7.0"
-    "@noble/ed25519" "^1.6.1"
-    arweave "=1.11.8"
-    base64url "^3.0.1"
-    bs58 "^4.0.1"
-    keccak "^3.0.2"
-    secp256k1 "^5.0.0"
-  optionalDependencies:
-    "@randlabs/myalgo-connect" "^1.1.2"
-    algosdk "^1.13.1"
-    arweave-stream-tx "^1.1.0"
-    multistream "^4.1.0"
-    tmp-promise "^3.0.2"
-
 archiver-utils@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/archiver-utils/-/archiver-utils-2.1.0.tgz#e8a460e94b693c3e3da182a098ca6285ba9249e2"
@@ -1339,35 +1315,6 @@ are-we-there-yet@^3.0.0:
     delegates "^1.0.0"
     readable-stream "^3.6.0"
 
-arlocal@1.1.62:
-  version "1.1.62"
-  resolved "https://registry.yarnpkg.com/arlocal/-/arlocal-1.1.62.tgz#aecb7e8bc2e915a7e4be8c82b74a0a694c5a080a"
-  integrity sha512-BnpolFe3obbQBGKvvkvrAZ4oleLHox7Xcly2l896cHzysPqvo8C9lYofUiQKYcprHIhHH1F7AFLrxAvZq5yQLQ==
-  dependencies:
-    "@koa/cors" "^3.1.0"
-    apollo-server-koa "^3.6.2"
-    arbundles "^0.6.19"
-    arweave-bundles "^1.0.3"
-    asn1.js "5.4.1"
-    bignumber.js "^9.0.2"
-    bytes "^3.1.2"
-    graphql "^16.2.0"
-    knex "^0.95.6"
-    koa "^2.13.4"
-    koa-body "^4.2.0"
-    koa-bodyparser "^4.3.0"
-    koa-json "^2.0.2"
-    koa-logger "^3.2.1"
-    koa-router "^10.1.1"
-    lodash "^4.17.21"
-    mime "^3.0.0"
-    minimist "^1.2.5"
-    moment "^2.29.1"
-    rfc4648 "^1.5.1"
-    smartweave "^0.4.46"
-    sqlite3 "^5.0.3"
-    tsc-watch "^4.6.0"
-
 arlocal@^1.1.59:
   version "1.1.61"
   resolved "https://registry.yarnpkg.com/arlocal/-/arlocal-1.1.61.tgz#2389847021d67d204f254e342d158530f2443f0e"
@@ -1426,19 +1373,7 @@ arweave@1.13.7:
     base64-js "^1.5.1"
     bignumber.js "^9.0.2"
 
-arweave@=1.11.8:
-  version "1.11.8"
-  resolved "https://registry.yarnpkg.com/arweave/-/arweave-1.11.8.tgz#09376e0c6cec40a661cbb27a306cb11c0a663cd8"
-  integrity sha512-58ODeNPIC4OjaOCl2bXjKbOFGsiVZFs+DkQg3BvQGvFWNqw1zTJ4Jp01xGUz+GbdOaDyJcCC0g3l0HwdJfFPyw==
-  dependencies:
-    arconnect "^0.4.2"
-    asn1.js "^5.4.1"
-    axios "^0.27.2"
-    base64-js "^1.5.1"
-    bignumber.js "^9.0.2"
-    util "^0.12.4"
-
-arweave@^1.10.13, arweave@^1.10.5, arweave@^1.11.4, arweave@^1.13.1, arweave@^1.13.7, arweave@^1.14.4:
+arweave@1.14.4, arweave@^1.10.13, arweave@^1.10.5, arweave@^1.11.4, arweave@^1.13.7:
   version "1.14.4"
   resolved "https://registry.yarnpkg.com/arweave/-/arweave-1.14.4.tgz#5ba22136aa0e7fd9495258a3931fb770c9d6bf21"
   integrity sha512-tmqU9fug8XAmFETYwgUhLaD3WKav5DaM4p1vgJpEj/Px2ORPPMikwnSySlFymmL2qgRh2ZBcZsg11+RXPPGLsA==
@@ -1508,14 +1443,6 @@ axios@^0.21.3:
   integrity sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==
   dependencies:
     follow-redirects "^1.14.0"
-
-axios@^0.27.2:
-  version "0.27.2"
-  resolved "https://registry.yarnpkg.com/axios/-/axios-0.27.2.tgz#207658cc8621606e586c85db4b41a750e756d972"
-  integrity sha512-t+yRIyySRTp/wua5xEr+z1q60QmLq8ABsS5O9Me1AsE5dfKqgnCFzwiCZZ/cGNd1lq4/7akDWMxdhVlucjmnOQ==
-  dependencies:
-    follow-redirects "^1.14.9"
-    form-data "^4.0.0"
 
 axios@^1.4.0:
   version "1.6.2"
@@ -2511,7 +2438,7 @@ find-up@^5.0.0:
     locate-path "^6.0.0"
     path-exists "^4.0.0"
 
-follow-redirects@^1.14.0, follow-redirects@^1.14.9, follow-redirects@^1.15.0:
+follow-redirects@^1.14.0, follow-redirects@^1.15.0:
   version "1.15.3"
   resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.15.3.tgz#fe2f3ef2690afce7e82ed0b44db08165b207123a"
   integrity sha512-1VzOtuEM8pC9SFU1E+8KfTjZyMztRsgEfwQl44z8A25uy13jSzTj6dyK2Df52iV0vgHCfBwLhDWevLn95w5v6Q==
@@ -4756,15 +4683,7 @@ warp-contracts-plugin-deploy@1.0.12:
     arlocal "^1.1.59"
     node-stdlib-browser "^1.2.0"
 
-warp-contracts-plugin-signature@^1.0.17:
-  version "1.0.17"
-  resolved "https://registry.yarnpkg.com/warp-contracts-plugin-signature/-/warp-contracts-plugin-signature-1.0.17.tgz#4d30a3290c907c1ad176f581dfb590063bdc543e"
-  integrity sha512-kITntHtkIKTIA1aRBldPU+UmABjGPAEWGhBFuEjhc6ucFba5Zh1P2/EuFVsnaTBAjopzJvR2RExNhGrZfMGikw==
-  dependencies:
-    arbundles "^0.9.8"
-    arweave "^1.13.1"
-
-warp-contracts-postgres@^1.1.0:
+warp-contracts-postgres@1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/warp-contracts-postgres/-/warp-contracts-postgres-1.1.0.tgz#fb8d80780afa157676e5d3675c3b5ee5e40e0a5a"
   integrity sha512-g+CLx5qYBZIgNgnN3PKcLDX/1y14LLdrWh/7BOe8ZO9AfL5Cu0ByHOrauv7bAsTZG2Rhrb1Z/KD/6Igevrf7mg==

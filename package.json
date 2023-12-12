@@ -8,15 +8,11 @@
     },
     "dependencies": {
         "tsx": "4.6.2",
-        "arbundles": "^0.10.0",
-        "arlocal": "1.1.62",
-        "arweave": "^1.14.4",
+        "arweave": "1.14.4",
         "prettier": "^3.0.3",
         "typescript": "^5.0.0",
-        "warp-arbundles": "^1.0.4",
         "warp-contracts": "1.4.26",
         "warp-contracts-plugin-deploy": "1.0.12",
-        "warp-contracts-plugin-signature": "^1.0.17",
-        "warp-contracts-postgres": "^1.1.0"
+        "warp-contracts-postgres": "1.1.0"
     }
 }
