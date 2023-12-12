@@ -93,9 +93,10 @@ const proxyContract = (() => {
         maxEntriesPerKey: 10000,
     });
 
-    const warp = WarpFactory.forTestnet({ inMemory: true, dbLocation: "./cache/warp" })
-        .use(new DeployPlugin())
-        .useKVStorageFactory((contractTxId) => new PgSortKeyCache(cacheOpts(contractTxId)));
+    const warp = WarpFactory.forTestnet({ inMemory: true, dbLocation: "./cache/warp" }).use(
+        new DeployPlugin(),
+    );
+    // .useKVStorageFactory((contractTxId) => new PgSortKeyCache(cacheOpts(contractTxId)));
 
     const { arweave } = warp;
 
