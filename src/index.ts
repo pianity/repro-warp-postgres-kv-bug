@@ -41,9 +41,11 @@ const contractSrc = async function handle(
 
 async function readValues(contract: Contract) {
     console.log(
+        "getMessage:",
         (await contract.viewState({ function: "getMessage" } satisfies ContractAction)).result,
     );
     console.log(
+        "getMessageMap:",
         (await contract.viewState({ function: "getMessageMap" } satisfies ContractAction)).result,
     );
 }
